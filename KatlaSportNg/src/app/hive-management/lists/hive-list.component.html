@@ -12,8 +12,8 @@
       <tr *ngFor="let hive of hives">
         <th scope="row">{{hive.id}}</th>
         <!-- TODO STEP 6 - Add code and name values here. -->
-        <td scope="row">{{hive.code}}</td>
-        <td scope="row">{{hive.name}}</td>
+        <th scope="row">{{hive.code}}</th>
+        <th scope="row">{{hive.name}}</th>
         <td>
           <span class="btn-toolbar" role="toolbar" aria-label="Hive action buttons" style="display: block; white-space:nowrap;">
             <div class="btn-group mr-2" role="group" aria-label="Delete group" *ngIf="!hive.isDeleted" (click)="onDelete(hive.id)">
