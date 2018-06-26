@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HiveSectionService } from 'app/hive-management/services/hive-section.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from 'environments/environment';
 import { HiveSection } from 'app/hive-management/models/hive-section';
 import { HiveService } from 'app/hive-management/services/hive.service';
 import { HiveListItem } from 'app/hive-management/models/hive-list-item';
+import { HiveSectionService } from 'app/hive-management/services/hive-section.service';
 import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 
 @Component({
@@ -17,7 +16,7 @@ export class HiveSectionFormComponent implements OnInit {
   hiveSection = new HiveSection(0,'','',0,false,'');
   hives: HiveListItem[];
 
-  storeHiveId:number;
+  storeHiveId: number;
   existed = false;
 
   constructor(
@@ -55,21 +54,21 @@ export class HiveSectionFormComponent implements OnInit {
 
   onSubmit(){
     if(this.existed){
-      this.hiveSectionService.updateHiveSection(this.hiveSection).subscribe(k => this.navigateToHivesSections());
+      this.hiveSectionService.updateHiveSection(this.hiveSection).subscribe(() => this.navigateToHivesSections());
     } else {
-      this.hiveSectionService.addHiveSection(this.hiveSection).subscribe(k => this.navigateToHivesSections());
+      this.hiveSectionService.addHiveSection(this.hiveSection).subscribe(() => this.navigateToHivesSections());
     }
   }
 
   onDelete(){
-    this.hiveSectionService.setHiveSectionStatus(this.hiveSection.id, true).subscribe(k => this.hiveSection.isDeleted = true);
+    this.hiveSectionService.setHiveSectionStatus(this.hiveSection.id, true).subscribe(() => this.hiveSection.isDeleted = true);
   }
 
   onRestore(){
-    this.hiveSectionService.setHiveSectionStatus(this.hiveSection.id, false).subscribe(k => this.hiveSection.isDeleted = false);
+    this.hiveSectionService.setHiveSectionStatus(this.hiveSection.id, false).subscribe(() => this.hiveSection.isDeleted = false);
   }
 
   onPurge(){
-    this.hiveSectionService.deleteHiveSection(this.hiveSection.id).subscribe(k => this.navigateToHivesSections());
+    this.hiveSectionService.deleteHiveSection(this.hiveSection.id).subscribe(() => this.navigateToHivesSections());
   }
 }

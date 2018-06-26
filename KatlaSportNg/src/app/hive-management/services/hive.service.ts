@@ -27,7 +27,7 @@ export class HiveService {
   }
 
   addHive(hive: Hive): Observable<Hive> {
-    return this.http.post<Hive>(this.url, hive);
+    return this.http.post<Hive>(`${this.url}`, hive);
   }
 
   updateHive(hive: Hive): Observable<Object> {

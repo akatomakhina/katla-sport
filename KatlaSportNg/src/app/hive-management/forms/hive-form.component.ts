@@ -30,12 +30,8 @@ export class HiveFormComponent implements OnInit {
 
   navigateToHives() {
     this.router.navigate(['/hives']);
-  }
+  } 
 
-  onCancel() {
-    this.navigateToHives();
-  }
-  
   onSubmit() {
     if (this.existed) {
       this.hiveService.updateHive(this.hive).subscribe(h => this.navigateToHives());

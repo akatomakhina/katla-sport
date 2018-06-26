@@ -87,13 +87,13 @@ namespace KatlaSport.WebApi.Controllers
             }
 
             var hive = await _hiveService.CreateHiveAsync(createRequest);
-            var location = $"/api/hives/{hive.Id}";
+            var location = string.Format("/api/hives/{0}", hive.Id);
             return Created<Hive>(location, hive);
         }
 
         [HttpPut]
         [Route("{id:int:min(1)}")]
-        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Updates an existing hive.")]
+        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Updates an existed hive.")]
         [SwaggerResponse(HttpStatusCode.BadRequest)]
         [SwaggerResponse(HttpStatusCode.Conflict)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
@@ -111,13 +111,18 @@ namespace KatlaSport.WebApi.Controllers
 
         [HttpDelete]
         [Route("{id:int:min(1)}")]
-        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Deletes an existing product.")]
+        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Deletes an existed hive.")]
         [SwaggerResponse(HttpStatusCode.BadRequest)]
         [SwaggerResponse(HttpStatusCode.Conflict)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> DeleteProductAsync([FromUri] int id)
+        public async Task<IHttpActionResult> DeleteHiveAsync([FromUri] int id)
         {
+            if (id < 1)
+            {
+                return BadRequest(ModelState);
+            }
+
             await _hiveService.DeleteHiveAsync(id);
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
         }
