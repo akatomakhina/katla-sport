@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HiveService } from '../services/hive.service';
 import { Hive } from '../models/hive';
+import { hostViewClassName } from '@angular/compiler';
 
 @Component({
   selector: 'app-hive-form',
@@ -10,7 +11,7 @@ import { Hive } from '../models/hive';
 })
 export class HiveFormComponent implements OnInit {
 
-  hive = new Hive(0, "", "", "", false, "");
+  hive = new Hive(0, "My new hive", "HIVE0", "My address", false, "");
   existed = false;
 
   constructor(
@@ -36,14 +37,22 @@ export class HiveFormComponent implements OnInit {
   }
   
   onSubmit() {
+    if (this.existed) {
+      this.hiveService.updateHive(this.hive).subscribe(h => this.navigateToHives());
+     } else {
+      this.hiveService.addHive(this.hive).subscribe(p => this.navigateToHives());
+    }
   }
 
   onDelete() {
+    this.hiveService.setHiveStatus(this.hive.id, true).subscribe(h => this.hive.isDeleted = true);
   }
 
   onUndelete() {
+    this.hiveService.setHiveStatus(this.hive.id, false).subscribe(h => this.hive.isDeleted = false);
   }
 
   onPurge() {
+    this.hiveService.deleteHive(this.hive.id).subscribe(h => this.navigateToHives());
   }
 }
