@@ -19,6 +19,16 @@ export class HiveSectionListComponent implements OnInit {
     private hiveService: HiveService
   ) { }
 
+  onDelete(hiveSectionId: number){
+    var hiveSection = this.hiveSections.find(h => h.id == hiveSectionId);
+    this.hiveService.setHiveStatus(hiveSectionId, true).subscribe(c => hiveSection.isDeleted = true);
+  }
+
+  onUndelete(hiveSectionId: number){
+    var hiveSection = this.hiveSections.find(h => h.id == hiveSectionId);
+    this.hiveService.setHiveStatus(hiveSectionId, false).subscribe(c => hiveSection.isDeleted = false);
+  }
+
   ngOnInit() {
   this.route.params.subscribe(p => {
     this.hiveId = p['id'];
